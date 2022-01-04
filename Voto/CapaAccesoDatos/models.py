@@ -1,5 +1,7 @@
 from django.db import models
 
+from simple_history.models import HistoricalRecords
+
 # Create your models here.
 #Crea el modelo padron con elector_ci, nombre_elector, apellido_elector, correo_institucional, nivel_elector, hash, registro_voto
 class t_padron_electoral(models.Model):
@@ -41,6 +43,7 @@ class t_voto(models.Model):
     id_partido = models.ForeignKey(t_partido, on_delete=models.CASCADE)
     tipo_voto = models.CharField(max_length=50)
     voto_fecha = models.DateField()
+    history = HistoricalRecords()
 
     def __str__(self):
         return self.tipo_voto
@@ -60,15 +63,12 @@ class t_escrutinio(models.Model):
 
 #Crea tabla de registro de cambios de la tabla t_voto
 
-class auditoria(models.Model):
-    id_auditoria = models.AutoField(primary_key=True)
-    id_voto = models.ForeignKey(t_voto, on_delete=models.CASCADE)
-    id_partido = models.ForeignKey(t_partido, on_delete=models.CASCADE)
-    tipo_voto = models.CharField(max_length=50)
-    voto_fecha = models.DateField()
-    
-    def __str__(self):
-        return self.tipo_voto
+class Auditoria_Voto(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    created_by = models.CharField(max_length=255, blank=True, editable=False)
+    modified_at = models.DateTimeField(auto_now=True)
+    modified_by = models.CharField(max_length=255, blank=True, editable=False)
+
     
 
 
