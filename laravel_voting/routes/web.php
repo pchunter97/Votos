@@ -14,9 +14,9 @@ use App\Http\Controllers\CandidatesController;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-})->name('home');
+
+
+Route::get('/',[CandidatesController::class,'home'])->name('home');
 
 /*Route::get('/home', function () {
     return view('home');

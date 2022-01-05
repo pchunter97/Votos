@@ -8,6 +8,13 @@ use Illuminate\Support\Facades\DB;
 
 class CandidatesController extends Controller
 {
+
+    public function home()
+    {
+        $candidates = DB::table('candidates')->get();
+        return view('home', ['candidates' => $candidates]);
+    }
+
     public function createCandidate(Request $request){
         $candidateName= $request->input('candidateName');
         $candidateList= $request->input('candidateList');
@@ -16,6 +23,7 @@ class CandidatesController extends Controller
         );
         return \view('createCandidateForm');
     }
+
 
     public function votingPage()
     {
@@ -38,6 +46,7 @@ class CandidatesController extends Controller
     {
         return view('createCandidateForm');
     }
+    
     public function castYourVote(Request $request)
     {
         $candidateId = $request->input('candidateId');
